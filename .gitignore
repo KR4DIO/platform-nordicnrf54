@@ -1,0 +1,8 @@
+*.pyc
+__pycache__/
+.piolibdeps
+.pio
+.claude/
+
+# Local development notes (not part of the released platform)
+/docs

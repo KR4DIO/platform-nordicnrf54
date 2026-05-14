@@ -1,0 +1,30 @@
+name: Examples
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        # Keep push runs ubuntu-only; fan out to macos/windows on PRs.
+        os: ${{ fromJSON(github.event_name == 'pull_request' && '["ubuntu-latest","windows-latest","macos-latest"]' || '["ubuntu-latest"]') }}
+        example:
+          - "examples/arduino-blink"
+          - "examples/arduino-ble-led"
+          - "examples/arduino-ble-uart"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Python 3
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.9"
+      - name: Install dependencies
+        run: |
+          pip install -U https://github.com/platformio/platformio/archive/develop.zip
+          pip3 install adafruit-nrfutil
+          pio pkg install --global --platform symlink://.
+      - name: Build examples
+        run: |
+          pio run -d ${{ matrix.example }}
