@@ -9,7 +9,9 @@
     "ARM",
     "Cortex-M",
     "Nordic Semiconductor",
-    "nRF54L"
+    "nRF54L",
+    "nRF54L15",
+    "bluetooth"
   ],
   "engines": {
     "platformio": "^6"
