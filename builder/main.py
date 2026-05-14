@@ -207,11 +207,21 @@ if "DFUBOOTHEX" in env:
         BOOT_SETTING_ADDR=board.get("build.bootloader.settings_addr", "0x7F000")
     )
 
+    # The DFU package wraps the plain application hex. When a SoftDevice
+    # is present, that hex is userfirmware.hex (firmware.hex is the
+    # SD-merged image built above) - reusing the same ElfToHex target
+    # avoids a "multiple ways to build firmware.hex" SCons collision.
+    # Without a SoftDevice the app hex is just ${PROGNAME}.hex.
+    if "SOFTDEVICEHEX" in env:
+        dfu_app_hex = env.ElfToHex(join("$BUILD_DIR", "userfirmware"), target_elf)
+    else:
+        dfu_app_hex = env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf)
+
     env.AddPlatformTarget(
         "dfu",
         env.PackageDfu(
             join("$BUILD_DIR", "${PROGNAME}"),
-            env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf),
+            dfu_app_hex,
         ),
         target_firm,
         "Generate DFU Image",
