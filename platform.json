@@ -36,7 +36,7 @@
     "framework-arduinoadafruitnrf54": {
       "type": "framework",
       "optional": true,
-      "version": "https://github.com/lolren/nrf54-arduino-core.git"
+      "version": "https://github.com/lolren/nrf54-arduino-core/blob/main/package_nrf54l15clean_index.json"
     },
     "framework-arduinoadafruitnrf54-bootloader": {
       "type": "framework",
