@@ -36,7 +36,7 @@
     "framework-arduinoadafruitnrf54": {
       "type": "framework",
       "optional": true,
-      "version": "https://github.com/caveman99/nRF54_Arduino.git#v0.1.0"
+      "version": "https://github.com/lolren/nrf54-arduino-core.git"
     },
     "framework-arduinoadafruitnrf54-bootloader": {
       "type": "framework",
